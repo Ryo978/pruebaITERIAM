@@ -15,7 +15,7 @@
 	<name>prueba tecnica</name>
 	<description>prueba técnica para iteriam por José Ayllón Benítez</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
