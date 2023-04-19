@@ -11,12 +11,19 @@
 	<groupId>Iteriam</groupId>
 	<artifactId>prueba</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>prueba tecnica</name>
 	<description>prueba técnica para iteriam por José Ayllón Benítez</description>
 	<properties>
 		<java.version>8</java.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>localRepositoryId</id>
+			<name>localRepository</name>
+			<url>file://${project.basedir}/lib</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -60,6 +67,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.corp.calculator</groupId>
+			<artifactId>tracer</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 
