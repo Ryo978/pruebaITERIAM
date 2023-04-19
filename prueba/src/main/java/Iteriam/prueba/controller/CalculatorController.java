@@ -30,11 +30,4 @@ public class CalculatorController {
         }
     }
 
-    @GetMapping("calculator/{operation}")
-    public ResponseEntity<Double> getResult(@PathVariable String operation){
-        double result = calculatorService.operation(operation);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-
-    }
-
 }
