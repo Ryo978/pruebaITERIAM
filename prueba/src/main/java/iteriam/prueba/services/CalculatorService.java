@@ -60,7 +60,7 @@ public class CalculatorService {
         } catch (Exception e) {
             throw new OperationException("Ha habido un problema al obtener un operando.");
         }
-
+        tracer.trace(result);
         return result;
     }
 
