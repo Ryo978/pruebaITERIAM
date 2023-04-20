@@ -1,4 +1,4 @@
-package Iteriam.prueba;
+package iteriam.prueba;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package Iteriam.prueba.configuration;
+package iteriam.prueba.configuration;
 
 import io.corp.calculator.TracerImpl;
 import org.springframework.context.annotation.Bean;
