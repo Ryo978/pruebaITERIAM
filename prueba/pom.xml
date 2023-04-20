@@ -8,14 +8,14 @@
 		<version>3.0.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>Iteriam</groupId>
+	<groupId>iteriam</groupId>
 	<artifactId>prueba</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>prueba tecnica</name>
 	<description>prueba técnica para iteriam por José Ayllón Benítez</description>
 	<properties>
-		<java.version>8</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -72,6 +72,12 @@
 			<groupId>io.corp.calculator</groupId>
 			<artifactId>tracer</artifactId>
 			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.0.3</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

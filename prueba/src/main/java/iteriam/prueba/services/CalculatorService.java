@@ -18,10 +18,10 @@ public class CalculatorService {
         double result=0;
         switch (operator){
             case "+":
-                result = operand1+operand2;
+                result = operand1 + operand2;
                 break;
             case "-":
-                result = operand1-operand2;
+                result = operand1 - operand2;
                 break;
             default:
                 throw new BadOperatorException("No se reconoce el operador.");
