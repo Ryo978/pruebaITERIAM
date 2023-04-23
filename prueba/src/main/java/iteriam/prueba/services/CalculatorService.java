@@ -7,7 +7,6 @@ import iteriam.prueba.error.OperationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.stream.IntStream;
 
 
@@ -28,7 +27,9 @@ public class CalculatorService {
                 result = operand1 - operand2;
                 break;
             default:
-                throw new BadOperatorException("No se reconoce el operador.");
+                BadOperatorException ex = new BadOperatorException("No se reconoce el operador.");
+                tracer.trace(ex);
+                throw ex;
         }
         tracer.trace(result);
         return result;
@@ -36,8 +37,11 @@ public class CalculatorService {
 
     public double resolveComplexOperation(String operation) throws OperationException{
         String op = operation.trim().replaceAll("\\s", "");
-        if (!op.matches("[\\d\\+\\-\\.]+"))
-            throw new OperationException("La cadena contiene carácteres no permitidos");
+        if (!op.matches("[\\d\\+\\-\\.]+")) {
+            OperationException ex = new OperationException("La cadena contiene carácteres no permitidos");
+            tracer.trace(ex);
+            throw ex;
+        }
         int[] indices = IntStream.range(0, op.length())
                 .filter(i -> (op.charAt(i) == '+') || (op.charAt(i) == '-'))
                 .toArray();
@@ -45,7 +49,6 @@ public class CalculatorService {
     }
 
     private double makeComplexOperations(String operation, int[] indices) throws OperationException{
-        int previousindice = indices[0];
         double result = 0.0;
         try {
             result = Double.valueOf(operation.substring(0, indices[0]));
@@ -58,7 +61,9 @@ public class CalculatorService {
                 result = resolveSimpleOperation(result, operand, String.valueOf(operation.charAt(indices[i])));
             }
         } catch (Exception e) {
-            throw new OperationException("Ha habido un problema al obtener un operando.");
+            OperationException ex = new OperationException("Ha habido un problema al obtener un operando.");
+            tracer.trace(ex);
+            throw ex;
         }
         tracer.trace(result);
         return result;
