@@ -1,10 +1,10 @@
 package iteriam.prueba.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import iteriam.prueba.entities.ResultOperation;
 import iteriam.prueba.error.BadOperatorException;
 import iteriam.prueba.services.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +31,11 @@ public class CalculatorController {
             @ApiResponse(responseCode = "400", description = "Invalid operator supplied",
                     content = @Content) })
     @GetMapping("/calculate")
-    public ResponseEntity<Double> getResult(
+    public ResponseEntity<ResultOperation> getResult(
             @RequestParam(value = "operand1", required = false) BigDecimal operand1,
             @RequestParam(value = "operand2", required = false) BigDecimal operand2,
             @RequestParam(value = "operator", required = true) String operator){
-        double result = calculatorService.resolveSimpleOperation(operand1, operand2, operator);
+        ResultOperation result = calculatorService.resolveOperation(operand1, operand2, operator);
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }

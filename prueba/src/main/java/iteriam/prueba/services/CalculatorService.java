@@ -1,8 +1,10 @@
 package iteriam.prueba.services;
 
 
+import iteriam.prueba.entities.ResultOperation;
 import iteriam.prueba.error.BadOperatorException;
 import io.corp.calculator.TracerImpl;
+import iteriam.prueba.factorias.OperationFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +18,11 @@ public class CalculatorService {
     @Autowired
     TracerImpl tracer;
 
-    public double resolveSimpleOperation(BigDecimal operand1, BigDecimal operand2, String operator) throws BadOperatorException {
-        double result=0;
-        switch (operator){
-            case "+":
-                result = operand1 + operand2;
-                break;
-            case "-":
-                result = operand1 - operand2;
-                break;
-            default:
-                BadOperatorException ex = new BadOperatorException("No se reconoce el operador.");
-                tracer.trace(ex);
-                throw ex;
-        }
+    @Autowired
+    OperationFactory opFactory;
+
+    public ResultOperation resolveOperation(BigDecimal operand1, BigDecimal operand2, String operator) throws BadOperatorException {
+        ResultOperation result = new ResultOperation(opFactory.calculate(operand1, operand2, operator));
         tracer.trace(result);
         return result;
     }
