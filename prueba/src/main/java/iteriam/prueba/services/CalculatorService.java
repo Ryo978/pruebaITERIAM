@@ -6,6 +6,8 @@ import io.corp.calculator.TracerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 
 @Service
 public class CalculatorService {
@@ -14,7 +16,7 @@ public class CalculatorService {
     @Autowired
     TracerImpl tracer;
 
-    public double resolveSimpleOperation(double operand1, double operand2, String operator) throws BadOperatorException {
+    public double resolveSimpleOperation(BigDecimal operand1, BigDecimal operand2, String operator) throws BadOperatorException {
         double result=0;
         switch (operator){
             case "+":

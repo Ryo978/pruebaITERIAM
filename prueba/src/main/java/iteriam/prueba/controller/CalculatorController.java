@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/calculator")
 public class CalculatorController {
@@ -28,11 +30,11 @@ public class CalculatorController {
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Invalid operator supplied",
                     content = @Content) })
-    @GetMapping("/{operand1}/{operand2}/{operator}")
+    @GetMapping("/calculate")
     public ResponseEntity<Double> getResult(
-            @Parameter(description = "First operand of the operation") @PathVariable double operand1,
-            @Parameter(description = "Second operand of the operation") @PathVariable double operand2,
-            @Parameter(description = "Operator of the operation (just '+' or '-')") @PathVariable String operator){
+            @RequestParam(value = "operand1", required = false) BigDecimal operand1,
+            @RequestParam(value = "operand2", required = false) BigDecimal operand2,
+            @RequestParam(value = "operator", required = true) String operator){
         double result = calculatorService.resolveSimpleOperation(operand1, operand2, operator);
         return new ResponseEntity<>(result, HttpStatus.OK);
 
