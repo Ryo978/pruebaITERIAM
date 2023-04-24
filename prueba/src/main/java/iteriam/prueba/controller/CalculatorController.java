@@ -26,7 +26,7 @@ public class CalculatorController {
     /*
     * En esta llamada, devolvemos el resultado siempre que el operador sea correcto ('+' o '-') y si no, procedemos a mandar un bad request.
     */
-    @Operation(summary = "Resolve a simple operation")
+    @Operation(summary = "Resolve an operation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "It returns the operation solved",
                     content = @Content(mediaType = "application/json",
@@ -43,6 +43,17 @@ public class CalculatorController {
 
     }
 
+    /*
+    * Método para listar todos los operadores que hay disponibles en nuestra aplicación.
+    */
+    @Operation(summary = "Return all available operators")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    content = @Content(mediaType = "application/json",
+                            schema =  @Schema(implementation = List.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid operator supplied",
+                    content = @Content) })
+    @GetMapping("/calculate")
     public ResponseEntity<List<String>> getOperators(){
         List<String> operators = calculatorService.getAllOperators();
         return new ResponseEntity<>(operators, HttpStatus.OK);
