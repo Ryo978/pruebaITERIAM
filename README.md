@@ -22,9 +22,9 @@ Para implementar la librería tracer seguiremos los siguientes pasos:
 3. En la carpeta del proyecto ejecutamos *mvn install:install-file -Dfile="lib/tracer-1.0.0.jar" -DgroupId=io.corp.calculator -DartifactId=tracer -Dversion="1.0.0" -Dpackaging=jar -DcreateChecksum=true*.
 4. Ahora, en la carpeta local del repositorio maven (en m2) tendremos una carpeta llamada *io/corp/calculator/tracer/1.0.0*
 5. Creamos ese mismo camino desde nuestra carpeta lib *lib/io/corp/calculator/tracer/1.0.0*
-6. Copiad el archivo *maven-metadata-local.xml* que encontraréis en *.m2/io/corp/calculator/tracer* y se guarda en el mismo camino en lib, con el siguiente nombre: *maven-metadata-local.xml*.
-7. Copiad todos los archivos de *.m2/io/corp/calculator/tracer/1.0.0* en *lib/io/corp/calculator/tracer/1.0.0*
-8. Editad el POM y añadid el siguiente repositorio:
+6. Copiaremos el archivo *maven-metadata-local.xml* que encontraréis en *.m2/io/corp/calculator/tracer* y se guarda en el mismo camino en lib, con el siguiente nombre: *maven-metadata-local.xml*.
+7. Copiaremos todos los archivos de *.m2/io/corp/calculator/tracer/1.0.0* en *lib/io/corp/calculator/tracer/1.0.0*
+8. Se edita el POM y añadimos el siguiente repositorio:
 ```
 <repositories>
     <repository>
@@ -34,7 +34,7 @@ Para implementar la librería tracer seguiremos los siguientes pasos:
     </repository>
 </repositories>
 ```
-9. Añadid la dependencia:
+9. Se añade la dependencia:
 ```
 <dependency>
     <groupId>io.corp.calculator</groupId>
