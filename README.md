@@ -1,17 +1,17 @@
 # pruebaITERIAM
 
-## Description
+## Descripción.
 
 Una prueba muy simple sobre una calculadora por api, su funcionamiento se basa en operaciones sencillas que se realiza por llamadas a una API. Esta calculadora solo dispone de una suma y una resta.
 
-## Versions
+## Versiones
 
 - Java: 17
 - Springboot: 3.0.5
 - Maven: 3.6.2
 - Junit: >5.0.3
 
-## Tracer library
+## Librería Tracer
 
 Para implementar la librería tracer seguiremos los siguientes pasos:
 1. En la carpeta del proyecto, creamos la carpeta lib.
@@ -52,7 +52,7 @@ public class TracerConfiguration {
   }
 }
 ```
-## Start App
+## Inicializar la App
 
 En la carpeta root del proyecto, ejecutad *mvn clean install*.
 
@@ -64,7 +64,7 @@ Con esto, podemos acceder a la calculadora de la siguiente forma:
 1. calculator/{operand1}/{operand2}/{operator} -> como ejemplo podemos probar: *localhost:8080/calculator/19.5/265/+*
 2. calculator/{operation} -> como ejemplo podemos probar: *localhost:8080/calculator/40.6+26+35-50*
 
-## Decisions I made
+## Decisiones que he tomado
 
 He realizado dos llamadas sobretodo porque con la primera veía que era demasiado simple, y al intentar hacer la segunda con recursividad, no acababa contento. Al final me he decantado por la solución actual para la segunda porque creo que es una solución bastante limpia.
 
@@ -74,7 +74,7 @@ No he creado ningún mensaje JSON para las respuestas porque creo que es una apl
 
 A pesar de todo ello, la aplicación es muy limitada, en la llamada donde pasamos un string completo, no se tiene en cuenta la prioridad de las operaciones, y al no haber hecho ninguna diferencia entre un '-' por negativo (-15,6 por ejemplo) y un '-' por la operación 'resta' al intentar sumar o restar números negativos da error.
 
-### Changes
+### Cambios
 
 La aplicación realizada es muy simple, si tuvieramos ahora mismo que introducir nuevas funcionalidades como multiplicar o dividir, sería sencillo por la parte de la resolución simple, por la parte de resolución de múltiples operaciones sería más sencillo quitarlo que introducirle la lógica necesaria para que funcionara correctamente.
 
