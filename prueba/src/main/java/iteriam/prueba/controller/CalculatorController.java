@@ -2,6 +2,7 @@ package iteriam.prueba.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import iteriam.prueba.entities.ResultOperation;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/calculator")
@@ -27,7 +29,8 @@ public class CalculatorController {
     @Operation(summary = "Resolve a simple operation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "It returns the operation solved",
-                    content = @Content),
+                    content = @Content(mediaType = "application/json",
+                        schema =  @Schema(implementation = ResultOperation.class))),
             @ApiResponse(responseCode = "400", description = "Invalid operator supplied",
                     content = @Content) })
     @GetMapping("/calculate")
@@ -40,6 +43,11 @@ public class CalculatorController {
 
     }
 
+    public ResponseEntity<List<String>> getOperators(){
+        List<String> operators = calculatorService.getAllOperators();
+        return new ResponseEntity<>(operators, HttpStatus.OK);
+    }
+
     /*
      * Con este exceptionHandler verificamos que si no hay un + o un - no haya problemas
      */
@@ -47,5 +55,5 @@ public class CalculatorController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<BadOperatorException> handleBadOperatorException(BadOperatorException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
-        }
+    }
 }
