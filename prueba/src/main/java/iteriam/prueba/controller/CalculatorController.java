@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import iteriam.prueba.entities.ResultOperation;
-import iteriam.prueba.error.BadOperatorException;
 import iteriam.prueba.services.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,14 +56,5 @@ public class CalculatorController {
     public ResponseEntity<List<String>> getOperators(){
         List<String> operators = calculatorService.getAllOperators();
         return new ResponseEntity<>(operators, HttpStatus.OK);
-    }
-
-    /*
-     * Con este exceptionHandler verificamos que si no hay un + o un - no haya problemas
-     */
-    @ExceptionHandler(BadOperatorException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<BadOperatorException> handleBadOperatorException(BadOperatorException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
     }
 }
