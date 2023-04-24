@@ -52,7 +52,7 @@ public class CalculatorController {
                             schema =  @Schema(implementation = List.class))),
             @ApiResponse(responseCode = "400", description = "Invalid operator supplied",
                     content = @Content) })
-    @GetMapping("/calculate")
+    @GetMapping("/getOperators")
     public ResponseEntity<List<String>> getOperators(){
         List<String> operators = calculatorService.getAllOperators();
         return new ResponseEntity<>(operators, HttpStatus.OK);

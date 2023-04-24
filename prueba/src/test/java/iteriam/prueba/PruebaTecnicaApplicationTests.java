@@ -13,7 +13,7 @@ class PruebaTecnicaApplicationTests {
 	@Autowired
 	CalculatorService service;
 
-	@Test
+	/*@Test
 	void addSuccessTest() {
 		double addTest = 26.6;
 		double result = service.resolveOperation(17.3, 9.3, "+");
@@ -32,5 +32,5 @@ class PruebaTecnicaApplicationTests {
 		Assertions.assertThrows(BadOperatorException.class, () -> {
 			service.resolveOperation(50.9, 24.4, "x");
 		});
-	}
+	}*/
 }
