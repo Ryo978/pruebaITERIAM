@@ -23,8 +23,9 @@ class SumarTest {
 
     @Test
     void sumarNotOk(){
+        BigDecimal b = new BigDecimal(8);
         Assertions.assertThrows(BadOperandException.class, () -> {
-            sumar.calculate(null, new BigDecimal(8));
+            sumar.calculate(null, b);
         });
     }
 }

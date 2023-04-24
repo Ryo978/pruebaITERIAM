@@ -36,16 +36,19 @@ class CalculatorControllerTest {
 
     @Test
     void getResultNotOkByOperator(){
+        BigDecimal a = new BigDecimal(12.7);
+        BigDecimal b = new BigDecimal(8);
         when(calculator.resolveOperation(any(BigDecimal.class), any(BigDecimal.class), anyString())).thenThrow(new BadOperatorException("Error"));
         Assertions.assertThrows(BadOperatorException.class, () -> {
-            controller.getResult(new BigDecimal(12.7), new BigDecimal(8), "dividir");
+            controller.getResult(a, b, "dividir");
         });
     }
     @Test
     void getResultNotOkByOperand(){
+        BigDecimal b = new BigDecimal(8);
         when(calculator.resolveOperation(any(), any(BigDecimal.class), anyString())).thenThrow(new BadOperandException("Error"));
         Assertions.assertThrows(BadOperandException.class, () -> {
-            controller.getResult(null, new BigDecimal(8), "sumar");
+            controller.getResult(null, b, "sumar");
         });
     }
 
@@ -55,7 +58,7 @@ class CalculatorControllerTest {
         Collections.addAll(expected,"sumar", "restar");
         when(calculator.getAllOperators()).thenReturn(expected);
         List<String> actual = controller.getOperators().getBody();
-        Assertions.assertTrue(expected.size() == actual.size());
+        Assertions.assertEquals(expected.size(), actual.size());
     }
 
 

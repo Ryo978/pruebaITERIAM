@@ -23,8 +23,9 @@ class RestarTest {
 
     @Test
     void restarNotOk(){
+        BigDecimal b = new BigDecimal(8);
         Assertions.assertThrows(BadOperandException.class, () -> {
-            restar.calculate(null, new BigDecimal(8));
+            restar.calculate(null,b);
         });
     }
 }

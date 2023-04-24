@@ -35,19 +35,22 @@ class CalculatorServiceTest {
 
     @Test
     void resolveOperationNotOkByOperator(){
+        BigDecimal a = new BigDecimal(12.7);
+        BigDecimal b = new BigDecimal(8);
         when(factory.calculate(any(BigDecimal.class), any(BigDecimal.class), anyString()))
                 .thenThrow(new BadOperatorException("Error"));
         Assertions.assertThrows(BadOperatorException.class, () -> {
-            service.resolveOperation(new BigDecimal(12.7), new BigDecimal(8), "dividir");
+            service.resolveOperation(a, b, "dividir");
         });
     }
 
     @Test
     void resolveOperationNotOkByOperand(){
+        BigDecimal b = new BigDecimal(8);
         when(factory.calculate(any(), any(BigDecimal.class), anyString()))
                 .thenThrow(new BadOperandException("Error"));
         Assertions.assertThrows(BadOperandException.class, () -> {
-            service.resolveOperation(null, new BigDecimal(8), "sumar");
+            service.resolveOperation(null, b, "sumar");
         });
     }
 
@@ -57,7 +60,7 @@ class CalculatorServiceTest {
         Collections.addAll(expected,"sumar", "restar");
         when(factory.listOperationTypes()).thenReturn(expected);
         List<String> actual = service.getAllOperators();
-        Assertions.assertTrue(expected.size() == actual.size());
+        Assertions.assertEquals(expected.size(), actual.size());
     }
 
 

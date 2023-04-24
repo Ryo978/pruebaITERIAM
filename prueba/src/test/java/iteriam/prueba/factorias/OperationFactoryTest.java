@@ -37,20 +37,23 @@ class OperationFactoryTest {
     }
     @Test
     void calculateNotOkByOperator(){
+        BigDecimal a = new BigDecimal(12.7);
+        BigDecimal b = new BigDecimal(8);
         when(operaciones.containsKey(anyString())).thenReturn(false);
         Assertions.assertThrows(BadOperatorException.class, () -> {
-            factory.calculate(new BigDecimal(12.7), new BigDecimal(8), "dividir");
+            factory.calculate(a, b, "dividir");
         });
     }
 
     @Test
     void calculateNotOkByOperand(){
+        BigDecimal b = new BigDecimal(8);
         when(operaciones.containsKey(anyString())).thenReturn(true);
         when(operaciones.get(anyString())).thenReturn(operacion);
         when(operacion.calculate(any(BigDecimal.class), any(BigDecimal.class)))
                 .thenThrow(new BadOperandException("No se reconoce un operando"));
         Assertions.assertThrows(BadOperandException.class, () -> {
-            factory.calculate(null, new BigDecimal(8), "sumar");
+            factory.calculate(null, b, "sumar");
         });
     }
 
@@ -62,6 +65,6 @@ class OperationFactoryTest {
         List<String> expected = new LinkedList<>();
         Collections.addAll(expected, "sumar", "restar");
         List<String> actual = factory.listOperationTypes();
-        Assertions.assertTrue(actual.size() == expected.size());
+        Assertions.assertEquals(expected.size(), actual.size());
     }
 }
