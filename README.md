@@ -2,7 +2,7 @@
 
 ## Descripción.
 
-Una prueba muy simple sobre una calculadora por api, su funcionamiento se basa en operaciones sencillas que se realiza por llamadas a una API. Esta calculadora solo dispone de una suma y una resta.
+Una prueba de concepto sobre una calculadora por api, su funcionamiento se basa en operaciones que se realiza por llamadas a una API. Esta calculadora solo dispone de una suma y una resta pero estará preparado para poder aumentar de tamaño y admitir más operadores.
 
 ## Versiones
 
@@ -54,39 +54,26 @@ public class TracerConfiguration {
 ```
 ## Inicializar la App
 
-En la carpeta root del proyecto, ejecutad *mvn clean install*.
+En la carpeta root del proyecto, se ejecuta *mvn clean install*.
 
-Posteriormente ejecutad *mvn spring-boot:run*.
-Esto iniciará un proyecto y lo alojará en localhost:8080.
+Posteriormente *mvn spring-boot:run*.
+Esto iniciará el proyecto y lo alojará en localhost:8080.
 
-Con esto, podemos acceder a la calculadora de la siguiente forma:
+Con esto, se puede acceder a la calculadora de la siguiente forma:
 
-1. calculator/{operand1}/{operand2}/{operator} -> como ejemplo podemos probar: *localhost:8080/calculator/19.5/265/+*
-2. calculator/{operation} -> como ejemplo podemos probar: *localhost:8080/calculator/40.6+26+35-50*
+1. calculator/calculate: realiza una operación.
+- Para poder acceder correctamente a este endpoint se puede ejecutar el siguiente comando como ejemplo: 
+```
+curl -X 'GET' \
+  'http://localhost:8080/calculator/calculate?operand1=1&operand2=2&operator=sumar' \
+  -H 'accept: application/json'
+```
+2. calculator/getOperators: devuelve una lista con los operadores disponibles.
 
-## Decisiones que he tomado
+## Decisiones tomadas
 
-He realizado dos llamadas sobretodo porque con la primera veía que era demasiado simple, y al intentar hacer la segunda con recursividad, no acababa contento. Al final me he decantado por la solución actual para la segunda porque creo que es una solución bastante limpia.
+Se ha realizado una separación por paquetes para tener mejor cada clase de manera que esté asociada a su función, por ejemplo, sumar y restar están un paquete llamado operaciones, y la factoría que los gestiona en un paquete llamado factorías.
 
-Aunque nunca había creado un ExceptionHandler, he preferido aventurarme a ponerlo aunque no haya hecho seguramente una buena aplicación de la misma, porque si no tenía que devolver un String para poder cubrir, en caso de un error, el mensaje para devolverlo, y no me parecía correcto ya que quería devolver si o sí un tipo "double".
+Actualmente hay 2 controladores, uno para poder gestionar la llamada de cálculo y la lista de operaciones, y otra para poder manejar las excepciones que puedan saltar en el proceso.
 
-No he creado ningún mensaje JSON para las respuestas porque creo que es una aplicación muy sencilla como para necesitar devolver un mensaje de esta forma.
-
-A pesar de todo ello, la aplicación es muy limitada, en la llamada donde pasamos un string completo, no se tiene en cuenta la prioridad de las operaciones, y al no haber hecho ninguna diferencia entre un '-' por negativo (-15,6 por ejemplo) y un '-' por la operación 'resta' al intentar sumar o restar números negativos da error.
-
-### Cambios
-
-La aplicación realizada es muy simple, si tuvieramos ahora mismo que introducir nuevas funcionalidades como multiplicar o dividir, sería sencillo por la parte de la resolución simple, por la parte de resolución de múltiples operaciones sería más sencillo quitarlo que introducirle la lógica necesaria para que funcionara correctamente.
-
-Si nos centramos en la parte de operaciones sencillas, sería tan simple como añadir un caso más al switch, aunque eso supondría modificar el código, por poco que se modificara.
-
-Si usaramos la acción de realizar una operación, la pusieramos en una interfaz y hacemos un patrón factoría, sería muy fácil desacoplar el apartado de operar dentro del servicio y sería más fácil ir creando clases que se fueran necesitando por cada operando que se quisiera añadir. El principal problema que tendría esta acción, es la complejidad añadida a una aplicación que solo opera con un tipo primitivo, en este caso 'double', aunque sería una solución mejor porque el esquema principal de la aplicación no tendría que modificarse en ningún caso.
-
-Para hacer una mejor presentación de la aplicación, eliminaría la parte de "calculator/{operation}" y únicamente se mantiene porque si no la aplicación sería demasiado sencilla para lo que yo quería de una prueba técnica, aunque no esté del todo contento con como se ha realizado esa parte.
-
-### SOLID
-
-Esta aplicación no cumple el principio SOLID por varias razones:
-
-- Si añadimos una nueva funcionalidad, debe modificarse la parte de resolver multiples operaciones por completo, lo cual, no cumpliría ni la 'S' ni la 'O'.
-- Al no desacoplar la el caso del switch en la realización simple, siempre habrá que modificar esa operación, aunque solo sea añadir casos, por tanto, no se cumpliría la O.
+La factoría está dispuesta de manera, que si queremos añadir un nuevo operador, como 'multiplicar', lo único que tendremos que hacer es crear una nueva clase dentro del paquete operaciones que se asemeje a lo que ya está construido y con eso será suficiente para tener el nuevo operador funcional dentro del endpoint.
