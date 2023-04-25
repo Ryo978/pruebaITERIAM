@@ -26,22 +26,20 @@ class CalculatorServiceTest {
 
     @Test
     void resolveOperationOk(){
-        BigDecimal expected = new BigDecimal(20.7);
+        BigDecimal expected = new BigDecimal("20.7");
         when(factory.calculate(any(BigDecimal.class), any(BigDecimal.class), anyString())).thenReturn(expected);
-        BigDecimal actual = service.resolveOperation(new BigDecimal(12.7), new BigDecimal(8), "sumar")
+        BigDecimal actual = service.resolveOperation(new BigDecimal("12.7"), new BigDecimal(8), "sumar")
                 .getResult();
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
     void resolveOperationNotOkByOperator(){
-        BigDecimal a = new BigDecimal(12.7);
+        BigDecimal a = new BigDecimal("12.7");
         BigDecimal b = new BigDecimal(8);
         when(factory.calculate(any(BigDecimal.class), any(BigDecimal.class), anyString()))
                 .thenThrow(new BadOperatorException("Error"));
-        Assertions.assertThrows(BadOperatorException.class, () -> {
-            service.resolveOperation(a, b, "dividir");
-        });
+        Assertions.assertThrows(BadOperatorException.class, () -> service.resolveOperation(a, b, "dividir"));
     }
 
     @Test
@@ -49,9 +47,7 @@ class CalculatorServiceTest {
         BigDecimal b = new BigDecimal(8);
         when(factory.calculate(any(), any(BigDecimal.class), anyString()))
                 .thenThrow(new BadOperandException("Error"));
-        Assertions.assertThrows(BadOperandException.class, () -> {
-            service.resolveOperation(null, b, "sumar");
-        });
+        Assertions.assertThrows(BadOperandException.class, () -> service.resolveOperation(null, b, "sumar"));
     }
 
     @Test

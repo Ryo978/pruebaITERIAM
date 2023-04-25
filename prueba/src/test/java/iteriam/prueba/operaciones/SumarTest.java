@@ -16,16 +16,14 @@ class SumarTest {
 
     @Test
     void sumarOk(){
-        BigDecimal expected = new BigDecimal(20.7);
-        BigDecimal actual = sumar.calculate(new BigDecimal(12.7), new BigDecimal(8));
+        BigDecimal expected = new BigDecimal("20.7");
+        BigDecimal actual = sumar.calculate(new BigDecimal("12.7"), new BigDecimal(8));
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
     void sumarNotOk(){
         BigDecimal b = new BigDecimal(8);
-        Assertions.assertThrows(BadOperandException.class, () -> {
-            sumar.calculate(null, b);
-        });
+        Assertions.assertThrows(BadOperandException.class, () -> sumar.calculate(null, b));
     }
 }

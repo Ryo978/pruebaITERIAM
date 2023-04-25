@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,28 +27,24 @@ class CalculatorControllerTest {
 
     @Test
     void getResultOk(){
-        BigDecimal expected = new BigDecimal(20.7);
+        BigDecimal expected = new BigDecimal("20.7");
         when(calculator.resolveOperation(any(BigDecimal.class), any(BigDecimal.class), anyString())).thenReturn(new ResultOperation(expected));
-        ResultOperation actual = controller.getResult(new BigDecimal(12.7), new BigDecimal(8), "sumar").getBody();
+        ResultOperation actual = controller.getResult(new BigDecimal("12.7"), new BigDecimal(8), "sumar").getBody();
         Assertions.assertEquals(expected, actual.getResult());
     }
 
     @Test
     void getResultNotOkByOperator(){
-        BigDecimal a = new BigDecimal(12.7);
+        BigDecimal a = new BigDecimal("12.7");
         BigDecimal b = new BigDecimal(8);
         when(calculator.resolveOperation(any(BigDecimal.class), any(BigDecimal.class), anyString())).thenThrow(new BadOperatorException("Error"));
-        Assertions.assertThrows(BadOperatorException.class, () -> {
-            controller.getResult(a, b, "dividir");
-        });
+        Assertions.assertThrows(BadOperatorException.class, () -> controller.getResult(a, b, "dividir"));
     }
     @Test
     void getResultNotOkByOperand(){
         BigDecimal b = new BigDecimal(8);
         when(calculator.resolveOperation(any(), any(BigDecimal.class), anyString())).thenThrow(new BadOperandException("Error"));
-        Assertions.assertThrows(BadOperandException.class, () -> {
-            controller.getResult(null, b, "sumar");
-        });
+        Assertions.assertThrows(BadOperandException.class, () -> controller.getResult(null, b, "sumar"));
     }
 
     @Test

@@ -16,16 +16,14 @@ class RestarTest {
 
     @Test
     void restarOk(){
-        BigDecimal expected = new BigDecimal(20.7);
-        BigDecimal actual = restar.calculate(new BigDecimal(28.7), new BigDecimal(8));
+        BigDecimal expected = new BigDecimal("20.7");
+        BigDecimal actual = restar.calculate(new BigDecimal("28.7"), new BigDecimal(8));
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
     void restarNotOk(){
         BigDecimal b = new BigDecimal(8);
-        Assertions.assertThrows(BadOperandException.class, () -> {
-            restar.calculate(null,b);
-        });
+        Assertions.assertThrows(BadOperandException.class, () -> restar.calculate(null,b));
     }
 }

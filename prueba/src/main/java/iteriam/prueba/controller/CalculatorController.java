@@ -36,7 +36,7 @@ public class CalculatorController {
     public ResponseEntity<ResultOperation> getResult(
             @RequestParam(value = "operand1", required = false) BigDecimal operand1,
             @RequestParam(value = "operand2", required = false) BigDecimal operand2,
-            @RequestParam(value = "operator", required = true) String operator){
+            @RequestParam(value = "operator") String operator){
         ResultOperation result = calculatorService.resolveOperation(operand1, operand2, operator);
         return new ResponseEntity<>(result, HttpStatus.OK);
 

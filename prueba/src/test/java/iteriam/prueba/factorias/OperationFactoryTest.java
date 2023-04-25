@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -28,21 +27,19 @@ class OperationFactoryTest {
 
     @Test
     void calculateOk(){
-        BigDecimal expected = new BigDecimal(20.7);
+        BigDecimal expected = new BigDecimal("20.7");
         when(operacion.calculate(any(BigDecimal.class), any(BigDecimal.class))).thenReturn(expected);
         when(operaciones.containsKey(anyString())).thenReturn(true);
         when(operaciones.get(anyString())).thenReturn(operacion);
-        BigDecimal actual = factory.calculate(new BigDecimal(12.7), new BigDecimal(8), "sumar");
+        BigDecimal actual = factory.calculate(new BigDecimal("12.7"), new BigDecimal(8), "sumar");
         Assertions.assertEquals(expected, actual);
     }
     @Test
     void calculateNotOkByOperator(){
-        BigDecimal a = new BigDecimal(12.7);
+        BigDecimal a = new BigDecimal("12.7");
         BigDecimal b = new BigDecimal(8);
         when(operaciones.containsKey(anyString())).thenReturn(false);
-        Assertions.assertThrows(BadOperatorException.class, () -> {
-            factory.calculate(a, b, "dividir");
-        });
+        Assertions.assertThrows(BadOperatorException.class, () -> factory.calculate(a, b, "dividir"));
     }
 
     @Test
@@ -52,9 +49,7 @@ class OperationFactoryTest {
         when(operaciones.get(anyString())).thenReturn(operacion);
         when(operacion.calculate(any(BigDecimal.class), any(BigDecimal.class)))
                 .thenThrow(new BadOperandException("No se reconoce un operando"));
-        Assertions.assertThrows(BadOperandException.class, () -> {
-            factory.calculate(null, b, "sumar");
-        });
+        Assertions.assertThrows(BadOperandException.class, () -> factory.calculate(null, b, "sumar"));
     }
 
     @Test

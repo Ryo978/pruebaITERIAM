@@ -10,11 +10,11 @@ public class Sumar implements Operation {
 
     @Override
     public BigDecimal calculate(BigDecimal a, BigDecimal b) throws BadOperandException {
-        if (!isValid(a,b)) throw new BadOperandException("Uno de los operandos no es válido. Es imposible hacer la operación.");
+        if (hasInvalidOperands(a,b)) throw new BadOperandException("Uno de los operandos no es válido. Es imposible hacer la operación.");
         return  a.add(b);
     }
 
-    private boolean isValid (BigDecimal a, BigDecimal b){
-        return a != null && b != null;
+    private boolean hasInvalidOperands (BigDecimal a, BigDecimal b){
+        return a == null || b == null;
     }
 }
